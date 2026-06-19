@@ -25,11 +25,33 @@ export class BookmarkFacade {
     return service;
   }
 
-  public export(path: string, bookmarks: BookmarkSchema[]): void {
+  public export(path: string, bookmarks: BookmarkSchema[], orderByDomain?: boolean): void {
     const parser = this.getParser(path);
+
+    if (orderByDomain) bookmarks = this.orderByDomain(bookmarks);
     const content = parser.serialize(bookmarks);
+
     this.fileHandler.write(path, content);
     this.logger.info(`Exported ${bookmarks.length} bookmarks to ${path}`);
+  }
+
+  public orderByDomain(bookmarks: BookmarkSchema[]): BookmarkSchema[] {
+    if (!bookmarks.length) return [];
+
+    const folders = Map.groupBy(bookmarks, (b) => b.folder);
+
+    return [...folders.values()].flatMap((folderBookmarks) => {
+      const domains = Map.groupBy(folderBookmarks, (b) => this.getHostname(b.url));
+      return [...domains.values()].sort((a, b) => b.length - a.length).flat();
+    });
+  }
+
+  private getHostname(url: string): string {
+    try {
+      return new URL(url).hostname;
+    } catch {
+      return 'invalid-url';
+    }
   }
 
   private getParser(path: string): IBookmarkParser {
