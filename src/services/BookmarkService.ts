@@ -1,4 +1,4 @@
-import type { Bookmark, BookmarkSchema, BookmarkUpdate } from '@/types/bookmark';
+import type { Bookmark, BookmarkSchema, BookmarkUpdate, SearchOptions } from '@/types/bookmark';
 import { randomUUIDv7 } from 'bun';
 
 export class BookmarkService {
@@ -24,6 +24,34 @@ export class BookmarkService {
     return added;
   }
 
+  public searchBy(options: SearchOptions): Bookmark[] {
+    const { includeWords } = options;
+    const {
+      ignoreWords = [],
+      caseSensitive = false,
+      searchIn = ['title', 'url'],
+      includeAllWords = false,
+    } = options;
+
+    return Array.from(this.bookmarks.values()).filter((bookmark) => {
+      const searchTexts: string[] = [];
+
+      if (searchIn.includes('title')) searchTexts.push(bookmark.title);
+      if (searchIn.includes('url')) searchTexts.push(bookmark.url);
+      if (searchIn.includes('folder') && bookmark.folder) searchTexts.push(bookmark.folder);
+
+      const searchText = searchTexts.join(' ');
+
+      return this.matchWithKeywords(
+        searchText,
+        includeWords,
+        ignoreWords,
+        caseSensitive,
+        includeAllWords,
+      );
+    });
+  }
+
   public delete(bookmarks: BookmarkUpdate[]): Bookmark[] {
     const deleted: Bookmark[] = [];
 
@@ -43,6 +71,28 @@ export class BookmarkService {
 
   public list(): Bookmark[] {
     return [...this.bookmarks.values()];
+  }
+
+  private matchWithKeywords(
+    searchText: string,
+    includeWords: string[],
+    ignoreWords: string[],
+    caseSensitive: boolean,
+    includeAllWords: boolean,
+  ): boolean {
+    const prepareText = (text: string) => (caseSensitive ? text : text.toLowerCase());
+
+    const searchTextPrep = prepareText(searchText);
+    const includeWordsPrep = includeWords.map(prepareText);
+    const excludeWordsPrep = ignoreWords.map(prepareText);
+
+    const hasIncludeWord = includeAllWords
+      ? includeWordsPrep.every((word) => searchTextPrep.includes(word)) // AND lógico
+      : includeWordsPrep.some((word) => searchTextPrep.includes(word)); // OR lógico
+
+    const hasExcludeWord = excludeWordsPrep.some((word) => searchTextPrep.includes(word));
+
+    return hasIncludeWord && !hasExcludeWord;
   }
 
   private createBookmark(bookmark: BookmarkSchema): Bookmark {

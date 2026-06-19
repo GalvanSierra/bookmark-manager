@@ -10,4 +10,14 @@ export type Bookmark = BookmarkSchema & {
   id: string;
 };
 
+export type SearchFile = 'title' | 'url' | 'folder';
+
+export interface SearchOptions {
+  includeWords: string[];
+  ignoreWords?: string[];
+  caseSensitive?: boolean;
+  searchIn?: SearchFile[];
+  includeAllWords?: boolean;
+}
+
 export type BookmarkUpdate = Partial<Bookmark> & { id: string };
