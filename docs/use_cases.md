@@ -33,32 +33,22 @@ Criterios: el sistema infiere el parser por extensión del archivo a generar:
 - si es HTML Netscape; se conserva la jerarquia y anidación de las carpetas.
 - Si es JSON se usa un schema propio
 
-### **⭕ Historia 3 — Operaciones CRUD**
-
-_Como usuario, quiero realizar operaciones CRUD sobre subconjunto(s) de bookmarks, para su modificación y actualización._
-
-La historia está demasiado abierta. "CRUD sobre subconjuntos" puede significar desde modificar el título de un bookmark hasta mover cientos entre carpetas. Si no defines las operaciones permitidas, terminarás agregándolas ad hoc.
-
-Yo la escribiría así:
-
 ### ⭕ Historia 3 — Operaciones CRUD
 
 _Como usuario, quiero realizar operaciones CRUD sobre subconjunto(s) de bookmarks, para su modificación y actualización._
 
 ##### Create
 
-- Se puede crear un bookmark indicando al menos: `url`, `title` y `folderPath`
-
-- Se genera automáticamente un `id` único.
-- Si ya existe un bookmark con la misma URL:
-  - por defecto la operación falla;
+- [z] Se puede crear un bookmark indicando al menos: `url`, `title` y `folder`
+- [z] Se genera automáticamente un `id` único.
+- [z] Si ya existe un bookmark con la misma URL se omite
 
 ##### Read
 
 - Se puede obtener:
-  - un conjunto de bookmarks mediante filtros;
-  - todos los bookmarks del manager.
-- Las consultas retornan copias o vistas de solo lectura para evitar modificaciones accidentales.
+  - [x] un conjunto de bookmarks mediante filtros;
+  - [x] todos los bookmarks del manager.
+- [x] Las consultas retornan copias para evitar modificaciones accidentales.
 
 ##### Update
 
@@ -72,18 +62,16 @@ _Como usuario, quiero realizar operaciones CRUD sobre subconjunto(s) de bookmark
 
 ##### Delete
 
-- Se puede eliminar:
-  - un bookmark por `id`;
-  - un subconjunto obtenido mediante filtros.
+- [x] Se puede eliminar un bookmark por `id`;
+  - [x] un subconjunto obtenido mediante filtros.
+- [x] La operación retorna los bookmarks eliminados.
+- [x] Los bookmarks eliminados desaparecen del manager actual en memoria.
 
-- La operación retorna la cantidad de bookmarks eliminados.
-- Los bookmarks eliminados desaparecen del manager actual en memoria.
+### **✅ Historia 4 — Búsqueda por palabras clave**
 
-### **⭕ Historia 4 — Búsqueda por palabras clave**
+_Como usuario, quiero buscar bookmarks por palabras clave con modo OR, AND,exclusión y exact match, para extraer subconjuntos temáticos._
 
-_Como usuario, quiero buscar bookmarks por palabras clave con modo OR, AND y exclusión, para extraer subconjuntos temáticos._
-
-Criterios: búsqueda case-insensitive por defecto; se puede restringir a título, URL o carpeta; `includeAll: true` exige que todas las palabras coincidan.
+Criterios: búsqueda case-insensitive por defecto; se puede restringir a título, URL o carpeta; `includeAll: true` exige que todas las palabras coincidan y `exactMatch` exige que las palabras sean exactamente iguales a una de las claves de búsqueda usando un atributo de bookmark como selector.
 
 ### **⭕ Historia 5 — Extracción destructiva**
 
