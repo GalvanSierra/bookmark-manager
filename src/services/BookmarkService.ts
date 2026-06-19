@@ -1,4 +1,4 @@
-import type { Bookmark, BookmarkSchema } from '@/types/bookmark';
+import type { Bookmark, BookmarkSchema, BookmarkUpdate } from '@/types/bookmark';
 import { randomUUIDv7 } from 'bun';
 
 export class BookmarkService {
@@ -22,6 +22,23 @@ export class BookmarkService {
     }
 
     return added;
+  }
+
+  public delete(bookmarks: BookmarkUpdate[]): Bookmark[] {
+    const deleted: Bookmark[] = [];
+
+    for (const { id } of bookmarks) {
+      const exist = this.bookmarks.get(id);
+
+      if (!exist) continue;
+
+      this.bookmarks.delete(id);
+      this.urlIndex.delete(exist.url);
+
+      deleted.push(exist);
+    }
+
+    return deleted;
   }
 
   public list(): Bookmark[] {
