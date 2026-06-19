@@ -25,22 +25,18 @@ export class BookmarkService {
   }
 
   public searchBy(options: SearchOptions): Bookmark[] {
-    const { includeWords } = options;
-    const {
-      ignoreWords = [],
-      caseSensitive = false,
-      searchIn = ['title', 'url'],
-      includeAllWords = false,
-    } = options;
+    const includeWords = [options.includeWords].flat();
+    const searchIn = [options.searchIn ?? ['title', 'url']].flat();
 
-    return Array.from(this.bookmarks.values()).filter((bookmark) => {
-      const searchTexts: string[] = [];
-
-      if (searchIn.includes('title')) searchTexts.push(bookmark.title);
-      if (searchIn.includes('url')) searchTexts.push(bookmark.url);
-      if (searchIn.includes('folder') && bookmark.folder) searchTexts.push(bookmark.folder);
-
-      const searchText = searchTexts.join(' ');
+    const { ignoreWords = [], caseSensitive = false, includeAllWords = false } = options;
+    const bookmarks = Array.from(this.bookmarks.values()).filter((bookmark) => {
+      const searchText = [
+        searchIn.includes('title') && bookmark.title,
+        searchIn.includes('url') && bookmark.url,
+        searchIn.includes('folder') && bookmark.folder,
+      ]
+        .filter(Boolean)
+        .join(' ');
 
       return this.matchWithKeywords(
         searchText,
@@ -50,6 +46,8 @@ export class BookmarkService {
         includeAllWords,
       );
     });
+
+    return bookmarks;
   }
 
   public delete(bookmarks: BookmarkUpdate[]): Bookmark[] {

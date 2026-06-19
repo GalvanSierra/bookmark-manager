@@ -13,10 +13,10 @@ export type Bookmark = BookmarkSchema & {
 export type SearchFile = 'title' | 'url' | 'folder';
 
 export interface SearchOptions {
-  includeWords: string[];
+  includeWords: string[] | string;
   ignoreWords?: string[];
   caseSensitive?: boolean;
-  searchIn?: SearchFile[];
+  searchIn?: SearchFile[] | SearchFile;
   includeAllWords?: boolean;
 }
 
