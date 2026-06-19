@@ -18,6 +18,7 @@ export interface SearchOptions {
   caseSensitive?: boolean;
   searchIn?: SearchFile[] | SearchFile;
   includeAllWords?: boolean;
+  exactMatch?: 'title' | 'url';
 }
 
 export type BookmarkUpdate = Partial<Bookmark> & { id: string };

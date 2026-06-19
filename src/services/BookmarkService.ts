@@ -28,7 +28,12 @@ export class BookmarkService {
     const includeWords = [options.includeWords].flat();
     const searchIn = [options.searchIn ?? ['title', 'url']].flat();
 
-    const { ignoreWords = [], caseSensitive = false, includeAllWords = false } = options;
+    const {
+      ignoreWords = [],
+      caseSensitive = false,
+      includeAllWords = false,
+      exactMatch,
+    } = options;
     const bookmarks = Array.from(this.bookmarks.values()).filter((bookmark) => {
       const searchText = [
         searchIn.includes('title') && bookmark.title,
@@ -46,6 +51,11 @@ export class BookmarkService {
         includeAllWords,
       );
     });
+
+    if (exactMatch) {
+      const searchTerms = Array.from(new Set(includeWords));
+      return bookmarks.filter((bookmark) => searchTerms.includes(bookmark[exactMatch]));
+    }
 
     return bookmarks;
   }
