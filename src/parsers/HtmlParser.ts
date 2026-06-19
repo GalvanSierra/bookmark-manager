@@ -1,2 +1,1 @@
-export class HtmlParser {
-}
+export class HtmlParser {}

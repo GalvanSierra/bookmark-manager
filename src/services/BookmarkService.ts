@@ -1,2 +1,1 @@
-export class BookmarkService {
-}
+export class BookmarkService {}

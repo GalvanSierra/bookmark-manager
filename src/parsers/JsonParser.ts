@@ -1,2 +1,1 @@
-export class JsonParser {
-}
+export class JsonParser {}

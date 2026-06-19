@@ -6,9 +6,5 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig({
   files: ['**/*.{js,ts}'],
-  extends: [
-    js.configs.recommended,
-    tseslint.configs.strict,
-    tseslint.configs.stylistic,
-  ],
+  extends: [js.configs.recommended, tseslint.configs.strict, tseslint.configs.stylistic],
 });
