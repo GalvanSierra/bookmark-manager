@@ -33,32 +33,32 @@ Criterios: el sistema infiere el parser por extensión del archivo a generar:
 - si es HTML Netscape; se conserva la jerarquia y anidación de las carpetas.
 - Si es JSON se usa un schema propio
 
-### ⭕ Historia 3 — Operaciones CRUD
+### **✅ Historia 3 — Operaciones CRUD**
 
 _Como usuario, quiero realizar operaciones CRUD sobre subconjunto(s) de bookmarks, para su modificación y actualización._
 
 ##### Create
 
-- [z] Se puede crear un bookmark indicando al menos: `url`, `title` y `folder`
-- [z] Se genera automáticamente un `id` único.
-- [z] Si ya existe un bookmark con la misma URL se omite
+- [x] Se puede crear un bookmark indicando al menos: `url`, `title` y `folder`
+- [x] Se genera automáticamente un `id` único.
+- [x] Si ya existe un bookmark con la misma URL se omite
 
 ##### Read
 
-- Se puede obtener:
+- [x] Se puede obtener:
   - [x] un conjunto de bookmarks mediante filtros;
   - [x] todos los bookmarks del manager.
 - [x] Las consultas retornan copias para evitar modificaciones accidentales.
 
 ##### Update
 
-- Se puede modificar: título, URL y folder
+- [x] Se puede modificar: título, URL y folder
 
-- La actualización puede aplicarse:
-  - a un bookmark individual;
-  - a un subconjunto obtenido mediante filtros.
+- [x] La actualización puede aplicarse:
+  - [x] a un bookmark individual;
+  - [x] a un subconjunto obtenido mediante filtros.
 
-- La actualización retorna la cantidad de bookmarks modificados.
+- [x] La actualización retorna los bookmarks modificados.
 
 ##### Delete
 
@@ -73,7 +73,7 @@ _Como usuario, quiero buscar bookmarks por palabras clave con modo OR, AND,exclu
 
 Criterios: búsqueda case-insensitive por defecto; se puede restringir a título, URL o carpeta; `includeAll: true` exige que todas las palabras coincidan y `exactMatch` exige que las palabras sean exactamente iguales a una de las claves de búsqueda usando un atributo de bookmark como selector.
 
-### **⭕ Historia 5 — Extracción destructiva**
+### **✅ Historia 5 — Extracción destructiva**
 
 _Como usuario, quiero extraer un subconjunto de bookmarks moviéndolos fuera del manager principal, para redistribuirlos o exportarlos._
 
