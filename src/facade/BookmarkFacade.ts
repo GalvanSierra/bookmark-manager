@@ -1,5 +1,6 @@
 import { PARSERS } from '@/config/constant';
 import { BookmarkService } from '@/services/BookmarkService';
+import type { BookmarkSchema } from '@/types/bookmark';
 import type { IBookmarkParser } from '@/types/parser';
 import { FileHandler } from '@/utils/FileHandler';
 import { Logger } from '@/utils/Logger';
@@ -22,6 +23,13 @@ export class BookmarkFacade {
     );
 
     return service;
+  }
+
+  public export(path: string, bookmarks: BookmarkSchema[]): void {
+    const parser = this.getParser(path);
+    const content = parser.serialize(bookmarks);
+    this.fileHandler.write(path, content);
+    this.logger.info(`Exported ${bookmarks.length} bookmarks to ${path}`);
   }
 
   private getParser(path: string): IBookmarkParser {
