@@ -4,12 +4,20 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun run index.ts"
+    "start": "bun run index.ts",
+    "eslint": "bunx eslint . --ext .ts",
+    "format": "bunx prettier --write ."
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "3.8.4"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.5.0",
+    "typescript-eslint": "^8.61.1"
   }
 }
