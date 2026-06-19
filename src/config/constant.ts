@@ -1,3 +1,7 @@
+import { HtmlParser } from '@/parsers/HtmlParser';
+import { JsonParser } from '@/parsers/JsonParser';
+import type { IBookmarkParser } from '@/types/parser';
+
 export const DEFAULT_FOLDER = 'Marcadores';
 export const HTML_TEMPLATE = `
 <!DOCTYPE NETSCAPE-Bookmark-file-1>
@@ -12,3 +16,8 @@ export const HTML_TEMPLATE = `
     <DL><p>
     </DL><p>
 `;
+
+export const PARSERS: Record<string, IBookmarkParser> = {
+  '.html': new HtmlParser(),
+  '.json': new JsonParser(),
+};
