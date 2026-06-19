@@ -60,6 +60,29 @@ export class BookmarkService {
     return bookmarks;
   }
 
+  public update(bookmarks: BookmarkUpdate[]): Bookmark[] {
+    const updated: Bookmark[] = [];
+
+    for (const bookmark of bookmarks) {
+      const exist = this.bookmarks.get(bookmark.id);
+
+      if (!exist) continue;
+
+      const updatedBookmark = { ...exist, ...bookmark };
+
+      this.bookmarks.set(bookmark.id, updatedBookmark);
+
+      if (updatedBookmark.url !== exist.url) {
+        this.urlIndex.delete(exist.url);
+        this.urlIndex.set(updatedBookmark.url, bookmark.id);
+      }
+
+      updated.push(updatedBookmark);
+    }
+
+    return updated;
+  }
+
   public delete(bookmarks: BookmarkUpdate[]): Bookmark[] {
     const deleted: Bookmark[] = [];
 
