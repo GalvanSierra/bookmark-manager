@@ -16,18 +16,22 @@
 
 Como el usuario soy yo mismo, los requisitos son directamente operaciones que necesito ejecutar. No hay entrevistas de usuario, no hay incertidumbre en el dominio.
 
-### **⭕ Historia 1 — Carga de archivo**
+### **✅ Historia 1 — Carga de archivo**
 
 _Como usuario, quiero cargar un archivo HTML o JSON de bookmarks para poder operar sobre ellos en memoria._
 
 Criterios: el sistema infiere el parser por extensión de archivo; los duplicados por URL se descartan al cargar; se reporta cuántos se cargaron y cuántos se descartaron.
 
-### **⭕ Historia 2 — Exportación**
+Al cargar, se asigna a cada bookmark un `id` único aleatorio.
+
+### **✅ Historia 2 — Exportación**
 
 _Como usuario, quiero exportar un subconjunto de bookmarks a HTML o JSON, para importarlos al navegador o procesarlos después._
 
-Criteros: el sistema infiere el parser por extensión del archivo a generar, si es HTML Netscape; se conserva la jerarquia y anidación de las carpetas. Si es JSON se usa un schema propio
-Al cargar, se asigna a cada bookmark un `id` único aleatorio
+Criterios: el sistema infiere el parser por extensión del archivo a generar:
+
+- si es HTML Netscape; se conserva la jerarquia y anidación de las carpetas.
+- Si es JSON se usa un schema propio
 
 ### **⭕ Historia 3 — Operaciones CRUD**
 
@@ -40,8 +44,6 @@ Yo la escribiría así:
 ### ⭕ Historia 3 — Operaciones CRUD
 
 _Como usuario, quiero realizar operaciones CRUD sobre subconjunto(s) de bookmarks, para su modificación y actualización._
-
-: Criterios de aceptación
 
 ##### Create
 
