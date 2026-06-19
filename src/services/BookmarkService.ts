@@ -83,6 +83,12 @@ export class BookmarkService {
     return updated;
   }
 
+  public pickBy(options: SearchOptions): Bookmark[] {
+    const picked = this.searchBy(options);
+    this.delete(picked);
+    return picked;
+  }
+
   public delete(bookmarks: BookmarkUpdate[]): Bookmark[] {
     const deleted: Bookmark[] = [];
 
@@ -102,6 +108,11 @@ export class BookmarkService {
 
   public list(): Bookmark[] {
     return [...this.bookmarks.values()];
+  }
+
+  public clear(): void {
+    this.bookmarks.clear();
+    this.urlIndex.clear();
   }
 
   private matchWithKeywords(
