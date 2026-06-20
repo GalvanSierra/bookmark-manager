@@ -1,5 +1,6 @@
 import { HtmlParser } from '@/parsers/HtmlParser';
 import { JsonParser } from '@/parsers/JsonParser';
+import type { IParserConfig } from '@/types/mangas';
 import type { IBookmarkParser } from '@/types/parser';
 
 export const DEFAULT_FOLDER = 'Marcadores';
@@ -20,4 +21,16 @@ export const HTML_TEMPLATE = `
 export const PARSERS: Record<string, IBookmarkParser> = {
   '.html': new HtmlParser(),
   '.json': new JsonParser(),
+};
+
+export const CONFIG_BY_DOMAIN: Record<string, IParserConfig> = {
+  'olympusxyz.com': {
+    regexTitle: /^(?:Capítulo\s+\d+\s+de\s+)?(.+?)\s+|/,
+    regexChapter: /Capítulo\s+(\d+)/,
+  },
+
+  'visorikigai.yomod.xyz': {
+    regexTitle: /^(?:Capítulo\s+\d+\s+-\s+)?(.+?)\s+\|/,
+    regexChapter: /Capítulo\s+(\d+)/,
+  },
 };
