@@ -5,7 +5,7 @@ export class BookmarkService {
   private bookmarks = new Map<string, Bookmark>();
   private urlIndex = new Map<string, string>();
 
-  public add(bookmarks: BookmarkSchema[]): Bookmark[] {
+  public add(bookmarks: (Bookmark | BookmarkSchema)[]): Bookmark[] {
     const added: Bookmark[] = [];
 
     for (const bookmark of bookmarks) {
@@ -13,17 +13,16 @@ export class BookmarkService {
         continue;
       }
 
-      const newBookmark = this.createBookmark(bookmark);
+      const newBookmark = this.isBookmark(bookmark) ? bookmark : this.createBookmark(bookmark);
 
       this.bookmarks.set(newBookmark.id, newBookmark);
-      this.urlIndex.set(bookmark.url, newBookmark.id);
+      this.urlIndex.set(newBookmark.url, newBookmark.id);
 
       added.push(newBookmark);
     }
 
     return added;
   }
-
   public searchBy(options: SearchOptions): Bookmark[] {
     const includeWords = [options.includeWords].flat();
     const searchIn = [options.searchIn ?? ['title', 'url']].flat();
@@ -57,7 +56,7 @@ export class BookmarkService {
       return bookmarks.filter((bookmark) => searchTerms.includes(bookmark[exactMatch]));
     }
 
-    return bookmarks;
+    return bookmarks.map((bookmark) => bookmark);
   }
 
   public update(bookmarks: BookmarkUpdate[]): Bookmark[] {
@@ -135,6 +134,10 @@ export class BookmarkService {
     const hasExcludeWord = excludeWordsPrep.some((word) => searchTextPrep.includes(word));
 
     return hasIncludeWord && !hasExcludeWord;
+  }
+
+  private isBookmark(bookmark: Bookmark | BookmarkSchema): bookmark is Bookmark {
+    return 'id' in bookmark;
   }
 
   private createBookmark(bookmark: BookmarkSchema): Bookmark {
