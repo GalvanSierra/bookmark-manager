@@ -35,6 +35,10 @@ export class BookmarkFacade {
     this.logger.info(`Exported ${bookmarks.length} bookmarks to ${path}`);
   }
 
+  public create(): BookmarkService {
+    return new BookmarkService();
+  }
+
   public orderByDomain(bookmarks: BookmarkSchema[]): BookmarkSchema[] {
     if (!bookmarks.length) return [];
 
