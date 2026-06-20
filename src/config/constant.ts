@@ -25,8 +25,8 @@ export const PARSERS: Record<string, IBookmarkParser> = {
 
 export const CONFIG_BY_DOMAIN: Record<string, IParserConfig> = {
   'olympusxyz.com': {
-    regexTitle: /^(?:Capítulo\s+\d+\s+de\s+)?(.+?)\s+|/,
-    regexChapter: /Capítulo\s+(\d+)/,
+    regexTitle: /^(?:Capítulo\s+\d+(?:\.\d+)?\s+de\s+)?(.+?)\s+\|/,
+    regexChapter: /Capítulo\s+(\d+(?:\.\d+)?)/,
   },
 
   'visorikigai.yomod.xyz': {
