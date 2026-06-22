@@ -56,7 +56,7 @@ export class BookmarkService {
       return bookmarks.filter((bookmark) => searchTerms.includes(bookmark[exactMatch]));
     }
 
-    return bookmarks.map((bookmark) => bookmark);
+    return bookmarks.map((bookmark) => ({ ...bookmark }));
   }
 
   public update(bookmarks: BookmarkUpdate[]): Bookmark[] {
@@ -106,7 +106,7 @@ export class BookmarkService {
   }
 
   public list(): Bookmark[] {
-    return [...this.bookmarks.values()];
+    return [...this.bookmarks.values()].map((b) => ({ ...b }));
   }
 
   public clear(): void {
