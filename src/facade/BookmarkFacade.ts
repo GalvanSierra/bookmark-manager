@@ -4,7 +4,8 @@ import type { BookmarkSchema } from '@/types/bookmark';
 import type { IBookmarkParser } from '@/types/parser';
 import { FileHandler } from '@/utils/FileHandler';
 import { Logger } from '@/utils/Logger';
-import { extname } from 'node:path';
+import { readdir } from 'node:fs/promises';
+import { extname, join } from 'node:path';
 
 export class BookmarkFacade {
   private logger = new Logger();
@@ -37,6 +38,11 @@ export class BookmarkFacade {
 
   public create(): BookmarkService {
     return new BookmarkService();
+  }
+
+  public async readDirectory(path: string): Promise<string[]> {
+    const files = await readdir(path, { withFileTypes: true, recursive: true });
+    return files.filter((f) => f.isFile()).map((f) => join(f.parentPath, f.name));
   }
 
   public orderByDomain(bookmarks: BookmarkSchema[]): BookmarkSchema[] {
