@@ -29,8 +29,12 @@ export const CONFIG_BY_DOMAIN: Record<string, IParserConfig> = {
     regexChapter: /Capítulo\s+(\d+(?:\.\d+)?)/,
   },
 
-  'visorikigai.yomod.xyz': {
-    regexTitle: /^(?:Capítulo\s+\d+\s+-\s+)?(.+?)\s+\|/,
-    regexChapter: /Capítulo\s+(\d+)/,
+  'viralikigai.milkchoco.online': {
+    regexTitle: /^(?:Capítulo\s+\d+(?:\.\d+)?\s+-\s+)?(.+?)\s+\|/,
+    regexChapter: /Capítulo\s+(\d+(?:\.\d+)?)/,
+  },
+  'submanhwa.com': {
+    regexTitle: /^(.+?)(?:\s+capitulo\s+\d+\s+manhwa|\s+-\s+Submanhwa\.com)$/i,
+    regexChapter: /capitulo\s+(\d+(?:\.\d+)?)/i,
   },
 };
