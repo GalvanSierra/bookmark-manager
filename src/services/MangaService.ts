@@ -85,7 +85,7 @@ export class MangaService {
     return { toKeep, toDelete };
   }
 
-  orderChaptersBySeries(chapters: MangaChapter[], sort: 'asc' | 'desc' = 'desc'): MangaChapter[] {
+  orderChaptersBySeries(chapters: MangaChapter[], sort: 'asc' | 'desc' = 'asc'): MangaChapter[] {
     return [...chapters].sort((a, b) => {
       const serieCmp = a.serie.localeCompare(b.serie);
 

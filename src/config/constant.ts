@@ -3,7 +3,7 @@ import { JsonParser } from '@/parsers/JsonParser';
 import type { IParserConfig } from '@/types/mangas';
 import type { IBookmarkParser } from '@/types/parser';
 
-export const DEFAULT_FOLDER = 'Marcadores';
+export const DEFAULT_FOLDER = 'Barra de marcadores';
 export const HTML_TEMPLATE = `
 <!DOCTYPE NETSCAPE-Bookmark-file-1>
 <!-- This is an automatically generated file.
